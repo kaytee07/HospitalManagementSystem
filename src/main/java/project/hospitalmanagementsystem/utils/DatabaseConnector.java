@@ -12,7 +12,7 @@ public class DatabaseConnector {
     private String url;
     private String user;
     private String password ;
-    DatabaseConnector(String url, String user, String password) {
+    public DatabaseConnector(String url, String user, String password) {
         this.url = url;
         this.user = user;
         this.password = password;
@@ -21,15 +21,13 @@ public class DatabaseConnector {
     public void connect() throws ClassNotFoundException, SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connect = DriverManager.getConnection(url, user, password);
+            DriverManager.getConnection(url, user, password);
             logger.info("Connected to database");
 
         } catch (ClassNotFoundException e) {
-            logger.error("JDBC Driver Not Found");
-            e.printStackTrace();
+            throw  new ClassNotFoundException("JDBC Driver Not Found");
         } catch (SQLException e){
-            logger.error("connection to database failed");
-            e.printStackTrace();
+            throw  new SQLException("connection to database failed");
         }
     }
 }

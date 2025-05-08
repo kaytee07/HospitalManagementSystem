@@ -12,7 +12,7 @@ public class HospitalManagementSystem {
     private static  final Logger logger = LoggerFactory.getLogger(DatabaseConnector.class);
     public static void main(String[] args) {
         try {
-            DatabaseConnector jdbc = new DatabaseConnector("jdbc:mysql://localhost:3306/hospital_databadr", "kaytee07", "");
+            DatabaseConnector jdbc = new DatabaseConnector("jdbc:mysql://localhost:3306/hospital_database", "root", "Hhdh573)&@/dg");
             jdbc.connect();
         } catch (ClassNotFoundException | SQLException e){
             logger.error(e.getMessage());
