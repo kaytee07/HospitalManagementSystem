@@ -18,11 +18,12 @@ public class DatabaseConnector {
         this.password = password;
     }
 
-    public void connect() throws ClassNotFoundException, SQLException {
+    public Connection connect() throws ClassNotFoundException, SQLException {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            DriverManager.getConnection(url, user, password);
+            Connection connection = DriverManager.getConnection(url, user, password);
             logger.info("Connected to database");
+            return  connection;
 
         } catch (ClassNotFoundException e) {
             throw  new ClassNotFoundException("JDBC Driver Not Found");
