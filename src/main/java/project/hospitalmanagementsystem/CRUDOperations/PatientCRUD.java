@@ -20,21 +20,20 @@ public class PatientCRUD {
         jdbc = new DatabaseConnector("jdbc:mysql://localhost:3306/hospital_database", "root", "Hhdh573)&@/dg");
     }
 
-    public boolean addPatient(int patient_id, String first_name, String last_name, String phone, String address) {
+    public boolean addPatient(String first_name, String last_name, String phone, String address) {
         if (first_name == null || last_name == null) {
             logger.error("Invalid input parameters for addPatient");
             throw new IllegalArgumentException("First name, last name, and valid email are required");
         }
 
-        String sqlCommands = "INSERT INTO Patients (patient_id, first_name, last_name,  phone_number, address) VALUES (?, ?, ?, ?, ?)";
+        String sqlCommands = "INSERT INTO Patient (first_name, last_name,  phone_number, address) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = jdbc.connect();
              PreparedStatement prepareStatement = conn.prepareStatement(sqlCommands)) {
-            prepareStatement.setString(1, Object.toS);
-            prepareStatement.setString(2, first_name);
-            prepareStatement.setString(3, last_name);
-            prepareStatement.setString(4, phone);
-            prepareStatement.setString(5, address);
+            prepareStatement.setString(1, first_name);
+            prepareStatement.setString(2, last_name);
+            prepareStatement.setString(3, phone);
+            prepareStatement.setString(4, address);
 
             int rowsAffected = prepareStatement.executeUpdate();
             logger.info("Patient added successfully: name={}", first_name);
@@ -88,7 +87,7 @@ public class PatientCRUD {
         }
 
 
-        Set<String> allowedColumns = Set.of("first_name", "last_name", "phone", "address");
+        Set<String> allowedColumns = Set.of("first_name", "last_name", "phone_number", "address");
         if (!allowedColumns.contains(column)) {
             logger.error("Attempt to update disallowed column: {}", column);
             throw new IllegalArgumentException("Cannot update column: " + column);
@@ -136,8 +135,6 @@ public class PatientCRUD {
                 logger.info("Patient found:");
                 System.out.println("ID: " + result.getInt("patient_id"));
                 System.out.println("Name: " + result.getString("first_name") + " " + result.getString("last_name"));
-                System.out.println("Gender: " + result.getString("gender"));
-                System.out.println("Phone: " + result.getString("phone"));
                 System.out.println("Address: " + result.getString("address"));
             } else {
                 logger.warn("No patient found with ID={}", patientId);
